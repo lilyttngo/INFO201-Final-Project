@@ -1,0 +1,30 @@
+---
+title: "TEst"
+output: html_document
+date: "2024-02-20"
+---
+
+```{r}
+library(dplyr)
+
+income_df <- read.csv("Movies/kaggle_income.csv")
+education_df <- read.csv("Movies/1995_2015.csv")
+
+# Creates a new categorical variable based on income levels
+
+income_df$Income_Category <- cut(income_df$Mean, breaks = c(-Inf, 50000, 100000, Inf), labels = c("Low", "Medium", "High"))
+
+# Creates a new continuous/numerical variable
+combined_df <- inner_join(income_df, education_df, by = c("Mean" = "Total"))
+combined_df$Education_Ratio <- combined_df$Education_Expenditure / combined_df$Mean
+
+# Summarizes the average income and education ratio by state
+summary_df <- combined_df %>%
+  group_by(State_Name) %>%
+  summarize(Average_Income = mean(Mean, na.rm = TRUE),
+            Average_Education_Ratio = mean(Education_Ratio, na.rm = TRUE))
+
+# Prints the summary dataframe
+summary_df
+
+```
