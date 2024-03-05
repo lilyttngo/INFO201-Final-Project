@@ -39,8 +39,12 @@ ui <- fluidPage(
           employment chain. By doing so, we offer a thought-provoking examination that can spark discussions 
           and inspire positive change."),
         h4("THE DATA | 2015-2019 Employment Rates by Educational Attainment In the United States",
-        p("The first dataset used throughout this project is called Education from kaggle.com. It lists some
-          the counties in all the States. It also lists people the amount of people that "
+        p("The first dataset used throughout this project is called Education from kaggle.com. This document 
+          lists every county within every state in the United States. Additionally, it details the population and the
+          percentage of adults with educational qualifications ranging from less than a high school diploma, a high school diploma only,
+          some college or associate's degree, and a bachelor's degree."),
+        p("The second dataset used throughout this project is called Income from kaggle.com. This document also lists" 
+
           
 
       ),
