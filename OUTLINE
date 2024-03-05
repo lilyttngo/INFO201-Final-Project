@@ -1,0 +1,13 @@
+OVERALL QUESTION:
+          How Much Are People Making Per Year Based On How Educated They Are?"),
+        p("- What is the average annual income for individuals with different levels of education, 
+          such as high school diplomas, bachelor's, master's, and doctoral degree?"),
+        p("- How have changes in education levels over time impacted median household income across 
+          different rural and urban areas?"),
+        p("- What is the correlation between the proportion of adults with a bachelor's degree or
+          higher and median household income in different countries, and how does this vary
+          across states?"),
+        p("- How have changes in education funding and policy impacted employment 
+          rates and income levels over the last few decades?"),
+        p("- How does the distribution of education levels vary across different regions, and 
+          what impact does this have on regional economic development?")
