@@ -4,7 +4,7 @@ library("plotly")
 
 ui <- fluidPage(
   theme = shinytheme("flatly"),
-  titlePanel("Employment Rates by Educational Attainment"),
+  titlePanel("Employment Rates by Educational Attainment From 2015 To 2019"),
   tabsetPanel(
     tabPanel("Project Overview", fluid = TRUE, sidebarLayout(
       sidebarPanel(
@@ -19,7 +19,7 @@ ui <- fluidPage(
           making the project universally relatable."),
         h2("RESEARCH QUESTION | Questions that We Should Consider"),
         p("The", strong("overarching research question"), "for this project is:
-          How Much Are People Making Per Year Based On How Educated They Are?"),
+          How Much Are People Making Per Year Based On How Educated They Are From 2015 To 2019?"),
         p("- What is the average annual income for individuals with different levels of education, 
           such as high school diplomas, bachelor's, master's, and doctoral degree?"),
         p("- How have changes in education levels over time impacted median household income across 
@@ -38,8 +38,9 @@ ui <- fluidPage(
         p("Our project aims to provide intelligent insights into the complexities of the education-
           employment chain. By doing so, we offer a thought-provoking examination that can spark discussions 
           and inspire positive change."),
-        h4("THE DATA | 1970-2019 Employment Rates by Educational Attainment In the United States",
-        p("The first dataset used throughout this project is called Education from kaggle.com. It lists "
+        h4("THE DATA | 2015-2019 Employment Rates by Educational Attainment In the United States",
+        p("The first dataset used throughout this project is called Education from kaggle.com. It lists some
+          the counties in all the States. It also lists people the amount of people that "
           
 
       ),
