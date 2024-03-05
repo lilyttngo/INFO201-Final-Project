@@ -31,6 +31,17 @@ ui <- fluidPage(
           rates and income levels over the last few decades?"),
         p("- How does the distribution of education levels vary across different regions, and 
           what impact does this have on regional economic development?")
+          h3("OUR PROJECT | Our Goal and Why Do We Care"),
+        p("Our exploration doesn't shy away from questioning or contradicting common assumptions. By
+          challenging preconceived notions about the direct correlation between education levels and 
+          employment outcomes, our project will encourage a reevaluation of the beliefs of society."
+        p("Our project aims to provide intelligent insights into the complexities of the education-
+          employment chain. By doing so, we offer a thought-provoking examination that can spark discussions 
+          and inspire positive change."),
+        h4("THE DATA | 1970-2019 Employment Rates by Educational Attainment In the United States",
+        p("The first dataset used throughout this project is called Education from kaggle.com. It lists "
+          
+
       ),
       mainPanel(
         
