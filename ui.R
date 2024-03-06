@@ -27,8 +27,10 @@ ui <- fluidPage(
           such as less than a high school diploma, a high school diploma only,
           some college or associate's degree, and a bachelor's degree?"),
         p("Timeline:"),
-        p("- How have changes in education funding and policy impacted employment 
-          rates and income levels over the last few decades?"),
+        p("- How has the change in average education levels over time impacted median household 
+          income across different rural and urban areas?"),
+        p("- Over the past two decades, how has the evolution of educational attainment levels
+          within counties influenced their median wages and unemployment rates"),
         p("Location:"),
         p("- How does the distribution of education levels vary across different regions, and 
           what impact does this have on regional economic development?"),
