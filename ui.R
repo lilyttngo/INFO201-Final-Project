@@ -53,7 +53,7 @@ ui <- fluidPage(
           individuals from each county across all states in the US."), 
         h1("ABOUT US | Authors and Affiliation"),
              p(strong("Authors:"),"Joel Elangovan, Ziwen Meng, Lily Ngo, Connor Yan"),
-             P(strong("Affiliation:"),"INFO 201: Foundational Skills for Data Science"),
+             p(strong("Affiliation:"),"INFO 201: Foundational Skills for Data Science"),
              p("The Information School, The University of Washington"),
              p("Winter 2024")
           ),
