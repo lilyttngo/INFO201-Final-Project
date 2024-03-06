@@ -42,8 +42,9 @@ ui <- fluidPage(
         p("The first dataset used throughout this project is called Education from kaggle.com. This document 
           lists every county within every state in the United States. Additionally, it details the population and the
           percentage of adults with educational qualifications ranging from less than a high school diploma, a high school diploma only,
-          some college or associate's degree, and a bachelor's degree."),
-        p("The second dataset used throughout this project is called Income from kaggle.com. This document also lists" 
+          some college or associate's degree, and a bachelor's degree from the year 2015 to 2019."),
+        p("The second dataset used throughout this project is called Income from kaggle.com. This document presents the mean income of 
+          individuals from each county across all states in the US."), 
 
           
 
