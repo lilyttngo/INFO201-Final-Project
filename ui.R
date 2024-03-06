@@ -20,7 +20,7 @@ ui <- fluidPage(
         h3("RESEARCH QUESTION | Questions that We Should Consider"),
         p("The", strong("overarching research question"), "for this project is:
           How Much Are People Making Per Year Based On How Educated They Are From 2015 To 2019?"),
-        p("Income VS Timeline:"),
+        p("Income VS Education Levels:"),
         p("- What is the average annual income for individuals with different levels of education, 
           such as less than a high school diploma, a high school diploma only,
           some college or associate's degree, and a bachelor's degree?"),
@@ -48,10 +48,13 @@ ui <- fluidPage(
           some college or associate's degree, and a bachelor's degree from the year 2015 to 2019."),
         p("The second dataset used throughout this project is called Income from kaggle.com. This document presents the mean income of 
           individuals from each county across all states in the US."), 
-
+        h3("ABOUT US | Authors and Affiliation"),
+           p(strong("Authors:"),"Joel Elangovan, Ziwen Meng, Lily Ngo, Connor Yan"),
+           P(strong("Affiliation:"),"INFO 201: Technical Foudations of Informatics"),
+           p("The Information School, The University of Washington"),
+           p("Winter 2024")
+          ),
           
-
-      ),
       mainPanel(
         
       )
