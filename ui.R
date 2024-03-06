@@ -113,25 +113,47 @@ viz_2_tab <- tabPanel("Viz 2 tab title",
 
 ## VIZ 3 TAB INFO
 
-tabPanel("Project Analysis", fluid = TRUE, sidebarLayout(
-  sidebarPanel(
-    h4("QUESTIONS"),
-    p("- Over the past two decades, how has the evolution of educational attainment levels within counties
-      influenced their median wages and unemployment rates?"),
-    h4("FINDINGS"),
-    p("The analysis indicates a clear trend where counties with higher educational attainment levels typically
-      exhibit higher median wages and lower unemployment rates over time. Notably, urban counties with a higher 
-      percentage of bachelor's degree holders or higher have seen a more pronounced increase in median wages. 
-      However, the impact of education on unemployment rates appears more nuanced and shows considerable 
-      fluctuations, possibly due to economic cycles and labor market changes.")
-  ),
-  
-  mainPanel(
-    # Placeholder for a table or other data display output related to the findings
-    dataTableOutput("tbl")
-  )
+viz_3_sidebar <- sidebarPanel(
+  h2("Options for Graph"),
+  selectInput("education_level", "Select Education Level:",
+              choices = c("All Levels", "Less than High School", 
+                          "High School Graduate", "Some College or Associate's Degree", 
+                          "Bachelor's Degree or Higher")),
+  sliderInput("year_range", "Select Year Range:",
+              min = 2000, max = 2019, value = c(2000, 2019)),
+  selectInput("data_type", "Select Data Type:",
+              choices = c("Unemployment Rates", "Median Wages")),
+  actionButton("update", "Update Graph")
+  # Add additional inputs or controls as needed for the analysis
 )
-),
+
+viz_3_main_panel <- mainPanel(
+  h2("Visualization of Educational Impact on Economic Outcomes"),
+  plotlyOutput(outputId = "viz_3_output_education"), # Output for question 1 visualization
+  plotlyOutput(outputId = "viz_3_output_income"),    # Output for question 2 visualization
+  hr(),
+  h3("Analysis"),
+  textOutput(outputId = "Our analysis over the past two decades shows that counties with higher levels of educational attainment",
+          "typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights",
+          "the critical role of education in securing economic prosperity and stability. Notably, the data suggests",
+          "that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend",
+          "to outperform rural areas in both median wages and employment rates."),  
+  textOutput(outputId = "The analysis of education's impact on median household income over the last two decades",
+      "reveals considerable variability. Notably, education seems to have a more pronounced",
+      "impact on income in urban areas, which may be attributed to the concentration of jobs",
+      "requiring higher educational qualifications. In contrast, rural areas show greater",
+      "fluctuations, with recent trends indicating a potential downturn in income benefits",
+      "from education. These findings underscore the complex relationship between educational",
+      "attainment and economic prosperity, which is influenced by a myriad of factors beyond",
+      "education itself.")  
+)
+
+viz_3_tab <- tabPanel("Economic Impact of Education",
+                      sidebarLayout(
+                        viz_3_sidebar,
+                        viz_3_main_panel
+                      )
+)
 ## CONCLUSIONS TAB INFO
 
 conclusion_tab <- tabPanel("Conclusion Tab Title",
