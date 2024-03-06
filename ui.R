@@ -114,29 +114,20 @@ viz_2_tab <- tabPanel("Viz 2 tab title",
 
 ## VIZ 3 TAB INFO
 
-viz_3_sidebar <- sidebarPanel(
-  h2("Options for Graph"),
-  selectInput("education_level", "Select Education Level:",
-              choices = c("All Levels", "Less than High School", 
-                          "High School Graduate", "Some College or Associate's Degree", 
-                          "Bachelor's Degree or Higher")),
-  sliderInput("year_range", "Select Year Range:",
-              min = 2000, max = 2019, value = c(2000, 2019)),
-  selectInput("data_type", "Select Data Type:",
-              choices = c("Unemployment Rates", "Median Wages")),
-  actionButton("update", "Update Graph")
+tabPanel("Project Analysis", fluid = TRUE, sidebarLayout(
+  sidebarPanel(
+    h4("QUESTIONS"),
+    p("- Over the past two decades, how has the evolution of educational attainment levels within counties influenced their median wages and unemployment rates?"),
+    h4("FINDINGS"),
+    p("The analysis indicates a clear trend where counties with higher educational attainment levels typically exhibit higher median wages and lower unemployment rates over time. Notably, urban counties with a higher percentage of bachelor's degree holders or higher have seen a more pronounced increase in median wages. However, the impact of education on unemployment rates appears more nuanced and shows considerable fluctuations, possibly due to economic cycles and labor market changes.")
+  ),
+  
+  mainPanel(
+    # Placeholder for a table or other data display output related to the findings
+    dataTableOutput("tbl")
+  )
 )
-viz_3_main_panel <- mainPanel(
-  h2("Visualization 3 Title"),
-  plotlyOutput(outputId = "your_viz_3_output_id"),
-  hr(),
-  h3("Analysis"),
-  textOutput(outputId = "analysis_text")
-viz_3_tab <- tabPanel("Economic Impact of Education",
-                      sidebarLayout(
-                        viz_3_sidebar,
-                        viz_3_main_panel
-                      )
+),
 ## CONCLUSIONS TAB INFO
 
 conclusion_tab <- tabPanel("Conclusion Tab Title",
