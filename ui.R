@@ -1,8 +1,7 @@
 library("shiny")
 library("shinythemes")
 library("plotly")
-source("https://raw.githubusercontent.com/lilyttngo/INFO201-Final-Project/main/education.csv")
-source("https://raw.githubusercontent.com/lilyttngo/INFO201-Final-Project/main/unemployment.csv")
+source("ui.R")
 ## OVERVIEW TAB INFO 
 ui <- fluidPage(
   theme = shinytheme("flatly"),
