@@ -116,9 +116,14 @@ viz_2_tab <- tabPanel("Viz 2 tab title",
 tabPanel("Project Analysis", fluid = TRUE, sidebarLayout(
   sidebarPanel(
     h4("QUESTIONS"),
-    p("- Over the past two decades, how has the evolution of educational attainment levels within counties influenced their median wages and unemployment rates?"),
+    p("- Over the past two decades, how has the evolution of educational attainment levels within counties
+      influenced their median wages and unemployment rates?"),
     h4("FINDINGS"),
-    p("The analysis indicates a clear trend where counties with higher educational attainment levels typically exhibit higher median wages and lower unemployment rates over time. Notably, urban counties with a higher percentage of bachelor's degree holders or higher have seen a more pronounced increase in median wages. However, the impact of education on unemployment rates appears more nuanced and shows considerable fluctuations, possibly due to economic cycles and labor market changes.")
+    p("The analysis indicates a clear trend where counties with higher educational attainment levels typically
+      exhibit higher median wages and lower unemployment rates over time. Notably, urban counties with a higher 
+      percentage of bachelor's degree holders or higher have seen a more pronounced increase in median wages. 
+      However, the impact of education on unemployment rates appears more nuanced and shows considerable 
+      fluctuations, possibly due to economic cycles and labor market changes.")
   ),
   
   mainPanel(
