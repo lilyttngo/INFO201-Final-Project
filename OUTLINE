@@ -31,16 +31,17 @@ How have changes in education funding and policy impacted employment
 How has the change in average education levels over time impacted median household income across
           different rural and urban areas?
 
-        3) LOCATION -
+        3) LOCATION - education.csv
 How does the distribution of education levels (less than highschool, highschool diploma only, some college (1-3yrs),
 college 4+ yrs) vary across different regions (urban vs rural)?
 
 What impact does this have on regional economic development?
 
-PLOT IDEA:
+LOCATION PLOT IDEA:
 Y-axis - different education levels
 X-axis - timeline
 dots - states
+
 colors (red/blue) - urban vs rural
 
 
