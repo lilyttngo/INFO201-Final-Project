@@ -1,13 +1,43 @@
-OVERALL QUESTION:
-          How Much Are People Making Per Year Based On How Educated They Are?"),
-        p("- What is the average annual income for individuals with different levels of education, 
-          such as high school diplomas, bachelor's, master's, and doctoral degree?"),
-        p("- How have changes in education levels over time impacted median household income across 
-          different rural and urban areas?"),
-        p("- What is the correlation between the proportion of adults with a bachelor's degree or
-          higher and median household income in different countries, and how does this vary
-          across states?"),
-        p("- How have changes in education funding and policy impacted employment 
-          rates and income levels over the last few decades?"),
-        p("- How does the distribution of education levels vary across different regions, and 
-          what impact does this have on regional economic development?")
+RESPONSIBILITIES:
+
+ZIWEN -
+Intro (Summary, introduce questions), Income VS Edu (Summary)
+
+CONNOR -
+Timeline (Summary + plot(server))
+
+LILY -
+Location (Summary + plot(server))
+
+JOEL -
+Income VS Edu plot (server)
+Conclusion
+
+
+INTRODUCTION
+MAIN / OVERALL (INCOME VS EDUCATION) 
+  Introduce the questions for the upcoming tabs, what we are focusing on, our overall goal for the project.
+
+        1) INCOME VS EDUCATION
+How Much Are People Making Per Year Based On How Educated They Are?
+
+What is the average annual income for individuals with different levels of education, such as high school diplomas, 
+bachelor's, master's, and doctoral degree?
+
+        2) TIMELINE - 
+How have changes in education funding and policy impacted employment 
+          rates and income levels over the last few decades?
+
+        3) LOCATION -
+How does the distribution of education levels vary across different regions, and 
+          what impact does this have on regional economic development?
+
+What is the correlation between the proportion of adults with a bachelor's degree or higher and median household income
+in different countries, and how does this vary across states?
+
+How have changes in education levels over time impacted median household income across 
+          different rural and urban areas?
+
+CONCLUSION
+How do our findings through the comparison of several data sets support our overall purpose/ goal? What did we end up 
+concluding to? In what way is this purposeful?
