@@ -56,7 +56,15 @@ ui <- fluidPage(
           ),
           
       mainPanel(
-        
+        img(src = "https://files.stlouisfed.org/files/htdocs/publications/images/uploads/2016/POE201701icon_20161228040109.png",
+            width = "95%", height = "95%"),
+        p(""),
+        img(src="https://scholasticadministrator.typepad.com/.a/6a00e54f8c25c9883401348777dc53970c-popup",
+            width="95%", height="95%"),
+        p(""),
+        img(src="https://bachelors-completion.northeastern.edu/wp-content/uploads/2020/06/iStock-1162366190-1-1.jpg",
+            width="95%", height="95%"),
+        ) 
       )
     ))
   )
