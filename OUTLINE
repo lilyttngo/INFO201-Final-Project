@@ -28,16 +28,21 @@ bachelor's, master's, and doctoral degree?
         2) TIMELINE - 
 How have changes in education funding and policy impacted employment 
           rates and income levels over the last few decades?
+How has the change in average education levels over time impacted median household income across
+          different rural and urban areas?
 
         3) LOCATION -
-How does the distribution of education levels vary across different regions, and 
-          what impact does this have on regional economic development?
+How does the distribution of education levels (less than highschool, highschool diploma only, some college (1-3yrs),
+college 4+ yrs) vary across different regions (urban vs rural)?
 
-What is the correlation between the proportion of adults with a bachelor's degree or higher and median household income
-in different countries, and how does this vary across states?
+What impact does this have on regional economic development?
 
-How have changes in education levels over time impacted median household income across 
-          different rural and urban areas?
+PLOT IDEA:
+Y-axis - different education levels
+X-axis - timeline
+dots - states
+colors (red/blue) - urban vs rural
+
 
 CONCLUSION
 How do our findings through the comparison of several data sets support our overall purpose/ goal? What did we end up 
