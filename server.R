@@ -3,8 +3,8 @@ library(plotly)
 library(dplyr)
 
 # Source file with dataframe
-
-
+source("education.csv")
+source("unemployment.csv")
 
 # Server
 server <- function(input, output) {
@@ -51,11 +51,6 @@ server <- function(input, output) {
     return("In rural areas, the distribution of education levels appears to be weighted towards high school completion, with a significant percentage of adults holding only a high school diploma, as indicated by the prominent light purple bar. This suggests that in these areas, completing high school is a common educational milestone.\n\nMoreover, there is also a substantial representation of adults with less than a high school diploma, marked by the red bar, which may point to barriers to educational access or attainment in rural regions.\n\nConversely, higher education levels such as a bachelor's degree or higher and four years of college or higher, denoted by the blue and pink bars, respectively, have a smaller percentage. This could reflect limited opportunities for higher education in rural areas or perhaps less demand for such qualifications in the rural workforce.")
   })
 }
-
-# Run the application 
-shinyApp(ui = ui, server = server)
-
-server <- function(input, output) {
   
   # Simulated data frame for illustration
   education_impact_df <- reactive({
@@ -99,14 +94,8 @@ server <- function(input, output) {
   })
 }
 
-# Run the application 
-shinyApp(ui = ui, server = server)
 
 
-# Run the application
-shinyApp(ui = ui, server = server)
-
-server <- function(input, output) {
   # Simulated data frame for illustration
   education_impact_df <- reactive({
     data.frame(
