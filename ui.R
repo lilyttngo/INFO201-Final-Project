@@ -73,22 +73,20 @@ ui <- fluidPage(
 )
 ## VIZ 1 TAB INFO
 
-viz_1_sidebar <- sidebarPanel(
-  h2("Options for graph"),
-  #TODO: Put inputs for modifying graph here
-)
-
-viz_1_main_panel <- mainPanel(
-  h2("Vizualization 1 Title"),
-  # plotlyOutput(outputId = "your_viz_1_output_id")
-)
-
-viz_1_tab <- tabPanel("Viz 1 tab title",
+ui <- fluidPage(
+  titlePanel("Education Level Distribution in Urban and Rural Areas"),
   sidebarLayout(
-    viz_1_sidebar,
-    viz_1_main_panel
+    sidebarPanel(),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Urban Areas", plotOutput("plotUrban")),
+        tabPanel("Rural Areas", plotOutput("plotRural")),
+        tabPanel("Analysis", textOutput("analysisText"))
+      )
+    )
   )
 )
+
 
 ## VIZ 2 TAB INFO
 
