@@ -127,12 +127,10 @@ ui <- fluidPage(
                          selected = c("City", "Rural"))
     ),
     mainPanel(
-      tabsetPanel(
-        tabPanel("Plot", plotOutput("impactPlot")),
-        tabPanel("Analysis", 
-                 h3("Analysis of Education's Impact"),
-        )
-      )
+      plotOutput("impactPlot"),
+      hr(),  # Horizontal line for separation
+      h4("Analysis"),  # Header for the analysis section
+      textOutput("analysisText")  # Output for analysis text
     )
   )
 )
