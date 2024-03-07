@@ -86,6 +86,6 @@ server <- function(input, output) {
   })
 }
 output$analysisText <- renderText({
-    return(The analysis of education's impact on median household income over the last two decades reveals considerable variability. Notably, education seems to have a more pronounced impact on income in urban areas, which may be attributed to the concentration of jobs requiring higher educational qualifications. In contrast, rural areas show greater fluctuations, with recent trends indicating a potential downturn in income benefits from education. These findings underscore the complex relationship between educational attainment and economic prosperity, which is influenced by a myriad of factors beyond education itself.")
+    return("The analysis of education's impact on median household income over the last two decades reveals considerable variability. Notably, education seems to have a more pronounced impact on income in urban areas, which may be attributed to the concentration of jobs requiring higher educational qualifications. In contrast, rural areas show greater fluctuations, with recent trends indicating a potential downturn in income benefits from education. These findings underscore the complex relationship between educational attainment and economic prosperity, which is influenced by a myriad of factors beyond education itself.")
 })
 }
