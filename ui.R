@@ -104,12 +104,7 @@ ui <- fluidPage(
     mainPanel(
       plotOutput("plot"),
       hr(), # Add a horizontal line for better separation
-      h3("Analysis Overview"),
-      textOutput("Our analysis over the past two decades shows that counties with higher levels of educational attainment
-             typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights
-             the critical role of education in securing economic prosperity and stability. Notably, the data suggests
-             that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend
-             to outperform rural areas in both median wages and employment rates.")
+      h3("Analysis Overview")
     )
   )
 )
@@ -136,7 +131,6 @@ ui <- fluidPage(
         tabPanel("Plot", plotOutput("impactPlot")),
         tabPanel("Analysis", 
                  h3("Analysis of Education's Impact"),
-                 p("The analysis of education's impact on median household income over the last two decades reveals considerable variability. Notably, education seems to have a more pronounced impact on income in urban areas, which may be attributed to the concentration of jobs requiring higher educational qualifications. In contrast, rural areas show greater fluctuations, with recent trends indicating a potential downturn in income benefits from education. These findings underscore the complex relationship between educational attainment and economic prosperity, which is influenced by a myriad of factors beyond education itself.")
         )
       )
     )
