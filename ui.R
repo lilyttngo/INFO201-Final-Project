@@ -140,6 +140,11 @@ ui <- fluidPage(
     )
   )
 )
+"Our analysis over the past two decades shows that counties with higher levels of educational attainment
+    typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights
+    the critical role of education in securing economic prosperity and stability. Notably, the data suggests
+    that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend
+    to outperform rural areas in both median wages and employment rates."
 ## CONCLUSIONS TAB INFO
 
 conclusion_tab <- tabPanel("Conclusion Tab Title",
