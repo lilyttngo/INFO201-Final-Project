@@ -7,6 +7,53 @@ library(dplyr)
 
 
 # Server
+server <- function(input, output) {
+  
+  
+  # Process the data
+  education_data_long <- reactive({
+    education %>% 
+      gather(key = "Education_Level", value = "Percent", starts_with("Percent of adults")) %>%
+      separate(Education_Level, into = c("Education_Level", "Year"), sep = ", ") %>%
+      filter(!is.na(Percent)) %>%
+      mutate(Percent = as.numeric(Percent),
+             Education_Level = gsub("Percent of adults with ", "", Education_Level)) # Simplifying education level names
+  })
+  
+  # Plot for Urban Areas
+  output$plotUrban <- renderPlot({
+    urban_data <- education_data_long() %>%
+      filter(`City/Suburb/Town/Rural 2013` %in% c("City", "Suburb", "Town"))
+    
+    ggplot(urban_data, aes(x = Education_Level, y = Percent, fill = Education_Level)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Distribution of Education Levels in Urban Areas",
+           y = "Percentage", x = "Education Level") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+  
+  # Plot for Rural Areas
+  output$plotRural <- renderPlot({
+    rural_data <- education_data_long() %>%
+      filter(`City/Suburb/Town/Rural 2013` == "Rural")
+    
+    ggplot(rural_data, aes(x = Education_Level, y = Percent, fill = Education_Level)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Distribution of Education Levels in Rural Areas",
+           y = "Percentage", x = "Education Level") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+  
+  # Analysis Text
+  output$analysisText <- renderText({
+    return("In rural areas, the distribution of education levels appears to be weighted towards high school completion, with a significant percentage of adults holding only a high school diploma, as indicated by the prominent light purple bar. This suggests that in these areas, completing high school is a common educational milestone.\n\nMoreover, there is also a substantial representation of adults with less than a high school diploma, marked by the red bar, which may point to barriers to educational access or attainment in rural regions.\n\nConversely, higher education levels such as a bachelor's degree or higher and four years of college or higher, denoted by the blue and pink bars, respectively, have a smaller percentage. This could reflect limited opportunities for higher education in rural areas or perhaps less demand for such qualifications in the rural workforce.")
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
 
 server <- function(input, output) {
   
