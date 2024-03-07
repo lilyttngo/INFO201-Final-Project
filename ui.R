@@ -26,8 +26,6 @@ ui <- fluidPage(
           such as less than a high school diploma, a high school diploma only,
           some college or associate's degree, and a bachelor's degree?"),
         p("Timeline:"),
-        p("- How has the change in average education levels over time impacted median household 
-          income across different rural and urban areas?"),
         p("- Over the past two decades, how has the evolution of educational attainment levels
           within counties influenced their median wages and unemployment rates"),
         p("Location:"),
@@ -133,46 +131,29 @@ shinyApp(ui, server)
 
 ## VIZ 3 TAB INFO
 
-viz_3_sidebar <- sidebarPanel(
-  h2("Options for Graph"),
-  selectInput("education_level", "Select Education Level:",
-              choices = c("All Levels", "Less than High School", 
-                          "High School Graduate", "Some College or Associate's Degree", 
-                          "Bachelor's Degree or Higher")),
-  sliderInput("year_range", "Select Year Range:",
-              min = 2000, max = 2019, value = c(2000, 2019)),
-  selectInput("data_type", "Select Data Type:",
-              choices = c("Unemployment Rates", "Median Wages")),
-  actionButton("update", "Update Graph")
-  # Add additional inputs or controls as needed for the analysis
-)
-
-viz_3_main_panel <- mainPanel(
-  h2("Visualization of Educational Impact on Economic Outcomes"),
-  plotlyOutput(outputId = "viz_3_output_education"), # Output for question 1 visualization
-  plotlyOutput(outputId = "viz_3_output_income"),    # Output for question 2 visualization
-  hr(),
-  h3("Analysis"),
-  textOutput(outputId = "Our analysis over the past two decades shows that counties with higher levels of educational attainment
-          typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights
-          the critical role of education in securing economic prosperity and stability. Notably, the data suggests
-          that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend
-          to outperform rural areas in both median wages and employment rates."),  
-  textOutput(outputId = "The analysis of education's impact on median household income over the last two decades
-      reveals considerable variability. Notably, education seems to have a more pronounced
-      impact on income in urban areas, which may be attributed to the concentration of jobs
-      requiring higher educational qualifications. In contrast, rural areas show greater
-      fluctuations, with recent trends indicating a potential downturn in income benefits
-      from education. These findings underscore the complex relationship between educational
-      attainment and economic prosperity, which is influenced by a myriad of factors beyond
-      education itself.")  
-)
-
-viz_3_tab <- tabPanel("Economic Impact of Education",
-                      sidebarLayout(
-                        viz_3_sidebar,
-                        viz_3_main_panel
-                      )
+ui <- fluidPage(
+  titlePanel("Education Impact Analysis"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("chartType", 
+                  label = "Select Chart Type",
+                  choices = c("Impact on Median Income", "Impact on Education Level"),
+                  selected = "Impact on Median Income"),
+      checkboxGroupInput("areaType", 
+                         label = "Select Area Type",
+                         choices = c("City", "Rural"),
+                         selected = c("City", "Rural"))
+    ),
+    mainPanel(
+      tabsetPanel(
+        tabPanel("Plot", plotOutput("impactPlot")),
+        tabPanel("Analysis", 
+                 h3("Analysis of Education's Impact"),
+                 p("The analysis of education's impact on median household income over the last two decades reveals considerable variability. Notably, education seems to have a more pronounced impact on income in urban areas, which may be attributed to the concentration of jobs requiring higher educational qualifications. In contrast, rural areas show greater fluctuations, with recent trends indicating a potential downturn in income benefits from education. These findings underscore the complex relationship between educational attainment and economic prosperity, which is influenced by a myriad of factors beyond education itself.")
+        )
+      )
+    )
+  )
 )
 ## CONCLUSIONS TAB INFO
 
