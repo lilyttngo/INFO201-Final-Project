@@ -92,40 +92,27 @@ viz_1_tab <- tabPanel("Viz 1 tab title",
 
 ## VIZ 2 TAB INFO
 
-viz_2_sidebar <- sidebarPanel(
-  selectInput("education_level_viz_2", "Select Education Level:",
-              choices = unique(combined_df$Education_Level),
-              selected = unique(combined_df$Education_Level)[1])
-  # Add other inputs as needed for modifying the graph
-)
-
-viz_2_main_panel <- mainPanel(
-  h2("Impact of Education Levels on Median Household Income Over Time"),
-  plotOutput("median_income_plot_viz_2")
-  # Add other UI elements or plotlyOutput if using plotly
-)
-
-viz_2_tab <- tabPanel("Viz 2 tab title",
+ui <- fluidPage(
+  titlePanel("Educational Impact on Wages and Unemployment"),
   sidebarLayout(
-    viz_2_sidebar,
-    viz_2_main_panel
+    sidebarPanel(
+      selectInput("chartType", 
+                  label = "Select Chart Type",
+                  choices = c("Impact on Median Wages", "Impact on Unemployment Rates"),
+                  selected = "Impact on Median Wages")
+    ),
+    mainPanel(
+      plotOutput("plot"),
+      hr(), # Add a horizontal line for better separation
+      h3("Analysis Overview"),
+      textOutput("Our analysis over the past two decades shows that counties with higher levels of educational attainment
+             typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights
+             the critical role of education in securing economic prosperity and stability. Notably, the data suggests
+             that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend
+             to outperform rural areas in both median wages and employment rates.")
+    )
   )
 )
-
-server <- function(input, output) {
-
-  filtered_data_viz_2 <- reactive({
-    combined_df %>%
-      filter(Education_Level == input$education_level_viz_2)
-  })
-  
-  output$median_income_plot_viz_2 <- renderPlot({
-    ggplot(filtered_data_viz_2(), aes(x = Year, y = Median_Household_Income_2019, color = Education_Level)) +
-      geom_line() +
-      labs(y = "Median Household Income", title = "Impact of Education Levels on Median Household Income Over Time") +
-      theme_minimal()
-  })
-}
 
 shinyApp(ui, server)
 
