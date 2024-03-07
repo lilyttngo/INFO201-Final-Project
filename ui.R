@@ -5,7 +5,7 @@ source(" ")
 ## OVERVIEW TAB INFO 
 ui <- fluidPage(
   theme = shinytheme("flatly"),
-  titlePanel("Employment Rates by Educational Attainment From 2015 To 2019"),
+  titlePanel("Employment Rates by Educational Attainment From 2015 To 2019"),w
   tabsetPanel(
     tabPanel("Project Overview", fluid = TRUE, sidebarLayout(
       sidebarPanel(
@@ -95,13 +95,16 @@ viz_1_tab <- tabPanel("Viz 1 tab title",
 ## VIZ 2 TAB INFO
 
 viz_2_sidebar <- sidebarPanel(
-  h2("Options for graph"),
-  #TODO: Put inputs for modifying graph here
+  selectInput("education_level_viz_2", "Select Education Level:",
+              choices = unique(combined_df$Education_Level),
+              selected = unique(combined_df$Education_Level)[1])
+  # Add other inputs as needed for modifying the graph
 )
 
 viz_2_main_panel <- mainPanel(
-  h2("Vizualization 2 Title"),
-  # plotlyOutput(outputId = "your_viz_1_output_id")
+  h2("Impact of Education Levels on Median Household Income Over Time"),
+  plotOutput("median_income_plot_viz_2")
+  # Add other UI elements or plotlyOutput if using plotly
 )
 
 viz_2_tab <- tabPanel("Viz 2 tab title",
@@ -110,6 +113,23 @@ viz_2_tab <- tabPanel("Viz 2 tab title",
     viz_2_main_panel
   )
 )
+
+server <- function(input, output) {
+
+  filtered_data_viz_2 <- reactive({
+    combined_df %>%
+      filter(Education_Level == input$education_level_viz_2)
+  })
+  
+  output$median_income_plot_viz_2 <- renderPlot({
+    ggplot(filtered_data_viz_2(), aes(x = Year, y = Median_Household_Income_2019, color = Education_Level)) +
+      geom_line() +
+      labs(y = "Median Household Income", title = "Impact of Education Levels on Median Household Income Over Time") +
+      theme_minimal()
+  })
+}
+
+shinyApp(ui, server)
 
 ## VIZ 3 TAB INFO
 
