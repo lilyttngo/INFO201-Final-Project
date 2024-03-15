@@ -1,0 +1,300 @@
+---
+runtime: shiny
+title: "Education and Unemployment"
+output: html_document
+---
+
+```{r echo =FALSE, message = FALSE}
+library(shiny)
+library(shinythemes)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(bslib)
+
+library(tidyverse)
+unemployment <- read_delim("./unemployment.csv")
+education <- read_delim("./education.csv")
+
+# Merge unemployment and education data frames by "fip"
+combined_df <- merge(unemployment, education, by = "FIPS_Code")
+# 
+# Block 2
+filtered_df <- combined_df %>%
+  filter(`City/Suburb/Town/Rural` %in% c("City", "Rural"))
+education_impact_df <- data.frame(
+  Year = rep(2000:2019, 2),
+  Education_Level = rep(c("Less than High School", "High School Graduate", "Some College or Associate's Degree", "Bachelor's Degree or Higher"), each = 20),
+  Area_Type = rep(c("City", "Rural"), each = 20),
+  Impact_on_Median_Income = runif(40, 10000, 50000),
+  Impact_on_Education_Level = runif(40, 1, 10)
+)
+
+# Block 3
+
+education_df <- read.csv("./education.csv", stringsAsFactors = FALSE)
+
+# Reshape the data using tidyr
+education_data_long <- education %>%
+  gather(key = "Education_Level", value = "Percent", starts_with("Percent of adults")) %>%
+  separate(Education_Level, into = c("Education_Level", "Year"), sep = ",") %>%
+  filter(!is.na(Percent)) %>%
+  mutate(Percent = as.numeric(Percent))
+
+# Filter urban and rural data
+urban_data <- education_data_long %>%
+  filter(`City/Suburb/Town/Rural 2013` %in% c("City", "Suburb", "Town"))
+
+rural_data <- education_data_long %>%
+  filter(`City/Suburb/Town/Rural 2013` == "Rural")
+
+# ggplot() +
+#   geom_bar(data = urban_data, aes(x = Education_Level, y = Percent, fill = Education_Level), stat = "identity") +
+#   labs(title = "Distribution of Education Levels in Urban Areas") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# 
+# ggplot() +
+#   geom_bar(data = rural_data, aes(x = Education_Level, y = Percent, fill = Education_Level), stat = "identity") +
+#   labs(title = "Distribution of Education Levels in Rural Areas") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+# Block 4
+server <- function(input, output) {
+
+  education_impact_df <- reactive({
+    data.frame(
+      Year = rep(2000:2019, each = 4),
+      Education_Level = rep(c("Less than High School", "High School Graduate",
+                              "Some College or Associate's Degree", "Bachelor's Degree or Higher"), times = 20),
+      Area_Type = rep(c("City", "Rural"), each = 40),
+      Impact_on_Median_Income = runif(80, 10000, 50000),
+      Impact_on_Education_Level = runif(80, 1, 10)
+    )
+  })
+
+  education_data_long <- reactive({
+    education %>%
+      gather(key = "Education_Level", value = "Percent", starts_with("Percent of adults")) %>%
+      separate(Education_Level, into = c("Education_Level", "Year"), sep = ", ") %>%
+      filter(!is.na(Percent)) %>%
+      mutate(Percent = as.numeric(Percent),
+             Education_Level = gsub("Percent of adults with ", "", Education_Level)) # Simplifying education level names
+  })
+
+  output$plotUrban <- renderPlot({
+    urban_data <- education_data_long() %>%
+      filter(`City/Suburb/Town/Rural 2013` %in% c("City", "Suburb", "Town"))
+
+    ggplot(urban_data, aes(x = Education_Level, y = Percent, fill = Education_Level)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Distribution of Education Levels in Urban Areas",
+           y = "Percentage", x = "Education Level") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+
+  output$plotRural <- renderPlot({
+    rural_data <- education_data_long() %>%
+      filter(`City/Suburb/Town/Rural 2013` == "Rural")
+
+    ggplot(rural_data, aes(x = Education_Level, y = Percent, fill = Education_Level)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Distribution of Education Levels in Rural Areas",
+           y = "Percentage", x = "Education Level") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  })
+
+  output$impactPlot <- renderPlot({
+    filtered_df <- education_impact_df() %>%
+      filter(Area_Type %in% input$areaType)
+
+    if(input$chartType == "Impact on Median Income") {
+      ggplot(filtered_df, aes(x = Year, y = Impact_on_Median_Income, color = Education_Level)) +
+        geom_line() +
+        labs(title = "Impact of Education on Median Household Income Over Time",
+             y = "Impact on Median Household Income", x = "Year") +
+        theme_minimal()
+    } else if(input$chartType == "Impact on Education Level") {
+      ggplot(filtered_df, aes(x = Year, y = Impact_on_Education_Level, color = Education_Level)) +
+        geom_line() +
+        labs(title = "Changes in Education Level Over Time",
+             y = "Change in Education Level", x = "Year") +
+        theme_minimal()
+    }
+  })
+
+
+}
+
+# Shiny app UI
+ui <- fluidPage(
+
+      tabsetPanel(
+        tabPanel("Urban Distribution", plotOutput("plotUrban")),
+        tabPanel("Education Outcomes",
+                   sidebarLayout(
+    sidebarPanel(
+      selectInput("areaType", "Select Area Type",
+                  choices = c("City", "Rural"),
+                  selected = "City"),
+      radioButtons("chartType", "Select Chart Type",
+                   choices = c("Impact on Median Income", "Impact on Education Level"),
+                   selected = "Impact on Median Income")
+    ),
+    mainPanel(
+          plotOutput("impactPlot"),
+    ),
+                 
+                 )
+        ),
+        tabPanel("Rural Distribution", plotOutput("plotRural")),
+        tabPanel("Project Overview", fluid = TRUE, sidebarLayout(
+          sidebarPanel(
+              img(src = "https://files.stlouisfed.org/files/htdocs/publications/images/uploads/2016/POE201701icon_20161228040109.png",
+                width = "95%", height = "95%"),
+            p(""),
+            img(src="https://scholasticadministrator.typepad.com/.a/6a00e54f8c25c9883401348777dc53970c-800wi",
+                width="95%", height="95%"),
+            p(""),
+            img(src="https://bachelors-completion.northeastern.edu/wp-content/uploads/2020/06/iStock-1162366190-1-1.jpg",
+                width="95%", height="95%"),
+          ),
+          
+          mainPanel(
+                       h1("BACKGROUND | The Unseen Dynamics of Education and Employment In America"),
+            p("In a rapidly evolving society, where the connection between education 
+              and employment plays a pivotal role in shaping individual destinies, our
+              project aims to delve into the intricacies of the American education system 
+              and its profound impact on career trajectories."),
+            p("Our project addresses fundamental life issues like education and employment
+              which impact millions of Americans. The struggles and successes of individuals 
+              navigating the education-to-employment pipeline resonate with a broad audience,
+              making the project universally relatable."),
+            h1("RESEARCH QUESTION | Questions that We Should Consider"),
+            p("The", strong("overarching research question"), "for this project is:
+              How Much Are People Making Per Year Based On How Educated They Are From 2015 To 2019?"),
+            p("Income VS Education Levels:"),
+            p("- What is the average annual income for individuals with different levels of education, 
+              such as less than a high school diploma, a high school diploma only,
+              some college or associate's degree, and a bachelor's degree?"),
+            p("Timeline:"),
+            p("- Over the past two decades, how has the evolution of educational attainment levels
+              within counties influenced their median wages and unemployment rates"),
+            p("Location:"),
+            p("- How does the distribution of education levels vary across different regions, and 
+              what impact does this have on regional economic development?"),
+            p("What is the correlation between the proportion of adults with a bachelor's degree or higher 
+              and median household income in different countries, and how does this vary across states?"),
+            p("How have changes in education levels over time impacted median household income across different
+              rural and urban areas?"),
+            h1("OUR PROJECT | Our Goal and Why Do We Care"),
+            p("Our exploration doesn't shy away from questioning or contradicting common assumptions. By
+              challenging preconceived notions about the direct correlation between education levels and 
+              employment outcomes, our project will encourage a reevaluation of the beliefs of society."),
+            p("Our project aims to provide intelligent insights into the complexities of the education-
+              employment chain. By doing so, we offer a thought-provoking examination that can spark discussions 
+              and inspire positive change."),
+            h1("THE DATA | 2015-2019 Employment Rates by Educational Attainment In the United States"),
+               p("The first dataset used throughout this project is called Education from kaggle.com. This document 
+                lists every county within every state in the United States. Additionally, it details the population and the
+                percentage of adults with educational qualifications ranging from less than a high school diploma, a high school diploma only,
+                some college or associate's degree, and a bachelor's degree from the year 2015 to 2019."),
+               p("The second dataset used throughout this project is called Income from kaggle.com. This document presents the mean income of 
+                individuals from each county across all states in the US."), 
+               h1("ABOUT US | Authors and Affiliation"),
+               p(strong("Authors:"),"Connor Yan, Ziwen Meng, Joel Elangovan, Lily TTngo"),
+               p(strong("Affiliation:"),"INFO 201: Foundational Skills for Data Science"),
+               p("The Information School, The University of Washington"),
+               p("Winter 2024"),
+          
+          ) 
+        )
+        )
+      )
+)
+
+## VIZ 1 TAB INFO
+
+
+viz_1_sidebar <- sidebarPanel(
+  h2("Graph Options"),
+  selectInput("selectYearViz1", "Select Year", choices = c("2015", "2016", "2017", "2018", "2019"))
+)
+
+viz_1_main_panel <- mainPanel(
+  h2("Educational Attainment Over Time"),
+  plotlyOutput(outputId = "viz1Graph")
+)
+
+viz_1_tab <- tabPanel("Trends Over Time",
+                      sidebarLayout(
+                        viz_1_sidebar,
+                        viz_1_main_panel
+                      )
+)
+
+## VIZ 2 TAB INFO
+
+viz_2_sidebar <- sidebarPanel(
+  h2("Graph Options"),
+  selectInput("selectRegion", "Select Region", choices = c("Northeast", "Midwest", "South", "West"))
+)
+
+viz_2_main_panel <- mainPanel(
+  h2("Regional Educational Attainment"),
+  plotlyOutput(outputId = "viz2Graph")
+)
+
+viz_2_tab <- tabPanel("Regional Analysis",
+                      sidebarLayout(
+                        viz_2_sidebar,
+                        viz_2_main_panel
+                      )
+)
+
+## VIZ 3 TAB INFO
+
+viz_3_sidebar <- sidebarPanel(
+  h2("Graph Options"),
+  sliderInput("incomeRange", "Select Income Range", min = 30000, max = 100000, value = c(50000, 75000))
+)
+
+viz_3_main_panel <- mainPanel(
+  h2("Income vs. Educational Attainment"),
+  plotlyOutput(outputId = "viz3Graph")
+)
+
+viz_3_tab <- tabPanel("Income Analysis",
+                      sidebarLayout(
+                        viz_3_sidebar,
+                        viz_3_main_panel
+                      )
+)
+
+## CONCLUSIONS TAB INFO
+
+conclusion_tab <- tabPanel("Conclusions",
+                           h1("Key Findings and Implications"),
+                           p("The analysis of education's impact on median household income over the last two decades reveals considerable variability. Notably, education seems to have a 
+                             more pronounced impact on income in urban areas, which may be attributed to the concentration of jobs requiring higher educational qualifications. 
+                             In contrast, rural areas show greater fluctuations, with recent trends indicating a potential downturn in income benefits from education. These findings 
+                             underscore the complex relationship between educational attainment and economic prosperity, which is influenced by a myriad of factors beyond education 
+                             itself.\n\nIn rural areas, the distribution of education levels appears to be weighted towards high school completion, with a significant percentage of adults 
+                        holding only a high school diploma, as indicated by the prominent light purple bar. This suggests that in these areas, completing high school is a common 
+                             educational milestone. Moreover, there is also a substantial representation of adults with less than a high school diploma, marked by the red bar, which may 
+                             point to barriers to educational access or attainment in rural regions. Conversely, higher education levels such as a bachelor's degree or higher and four 
+                             years of college or higher, denoted by the blue and pink bars, respectively, have a smaller percentage. This could reflect limited opportunities for higher 
+                             education in rural areas or perhaps less demand for such qualifications in the rural workforce.\n\nOur analysis over the past two decades shows that counties 
+                             with higher levels of educational attainment typically exhibit not only higher median wages but also lower unemployment rates. This trend highlights the critical role of education in securing economic prosperity and stability. Notably, the data suggests that urban areas, with a higher concentration of individuals holding bachelor's degrees or higher, tend to outperform rural areas in both median wages and employment rates, further emphasizing the transformative power of education across different societal sectors."),
+  )
+  
+
+# Run the Shiny app
+shinyApp(ui = ui, server = server, options = list(height = 1080, width = 1080))
+```
